@@ -291,10 +291,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <header>
     <nav>
       <b>University of Guyana Events</b>
-      <a href="{{ '/' | relative_url }}">Home  </a>
-      <a href="{{ '/submit_event.html' | relative_url }}">Submit An Event  </a>
+      <a href="https://taricohenry.github.io/CSE2201-Final-Project/">Home  </a>
+      <a href="https://taricohenry.github.io/CSE2201-Final-Project/submit_event.html">Submit An Event  </a>
       <a href="https://cse2201-final-project-contact-page.page.gd/">Contact  </a>
-      <a href="{{ '/admin.html' | relative_url }}">Admin</a>
+      <a href="https://taricohenry.github.io/CSE2201-Final-Project/admin.html">Admin</a>
     </nav>
   </header>
 
