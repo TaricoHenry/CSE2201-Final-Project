@@ -78,16 +78,16 @@
     } 
 
 
-
+    /*setting up my navigation bar*/
     .nav {
-      max-width: 1100px; /* Keeps the nav from getting too wide. */
-      margin: 0 auto; /* Centers the nav on the page. */
-      padding: 16px; /* Adds space inside the nav. */
-      display: flex; /* Puts the brand and links beside each other. */
-      gap: 16px; /* Adds space between nav items. */
-      flex-wrap: wrap; /* Allows the nav to wrap on smaller screens. */
-      align-items: center; /* Vertically centers the nav content. */
-      justify-content: space-between; /* Pushes the brand and links apart. */
+      max-width: 1100px; /*keep this narrow ish */
+      margin: 0 auto; /* try to center stuff */
+      padding: 16px; /* some paddeding */
+      display: flex; /* keep the wrods together*/
+      gap: 16px; /* keep some space between word */
+      flex-wrap: wrap; /* we need this so the text can wrap on the samll screens like phones */
+      align-items: center; /* just set it to center vertically */
+      justify-content: space-between; /* neet to add a bit more space between links */
     } 
 
     /*gloabl styling for the entire main section*/
@@ -428,8 +428,8 @@
       catch (error) { 
         console.error("Error loading event:", error); //dump error to console for troubleshooting or debugging
         pageStatus.textContent = "This event could not be loaded."; //show mesage on pg
-      } // Ends the error block.
-    } // Ends the loadEvent function.
+      } 
+    }
 
     // adding functionality to the rsvp button
     //on click navigate to the rsvp page
@@ -437,7 +437,10 @@
 
       //drop the alert it looks too ugly
       //alert("The RSVP will be diaplayed shortly");// Show a small alert until the rsvp page load so the user knows something is happending
-      window.location.href = rsvpPage; 
+      window.location.href = rsvpPage + "?id=" + eventId;
+
+      // was here for debugging
+      console.log(rsvpPage + "?id=" + eventId);
     };
 
     //just run the laod evnt after page load
