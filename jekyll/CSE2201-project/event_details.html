@@ -1,0 +1,445 @@
+---
+# Tarico Henry Page for event details
+# URL: /event_details.html
+---
+<!--Declaring my html document type so the browser cna render it good-->
+<!DOCTYPE html> 
+
+<!--not necessary but setting the language sometimes helps with SEO-->
+<html lang="en">
+
+<!--setting up my header for my html-->
+<head>
+
+  <!--Explicity setting the encoding as type uft-8 -->
+  <!--Sometimes text can encode weird and cause random errors-->
+  <!--Zak noticed this during test on his machine-->
+  <meta charset="utf-8"> 
+
+  <!--Setting up the viewport so that the page can scale good on phones and well as desktop-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+
+   <!-- Setting a Title for this page, helps make everything look professional and legit-->
+  <title>Event Details - University of Guyana</title>
+
+  <!--My styles file for this page-->
+  <!--Each page was built by one group member-->
+  <!--We opted for each page to have its own style file due to unique nature of everyone's coding style
+      When we tried one global styles file we ended up in a position where some group members commits
+      to git broke the entire file for everyone else.
+
+      This happened multiple times and as such we opted for each page to be self contained and have its own
+      styles and javascript in the same webpage file
+
+      While we understand this is not the best for structuring we had to arrive at this compromise 
+      so that the group could work and build collaboratively without breaking the project for eveyone 
+      after every git commit
+      -->
+  
+  <style>
+
+    /* Using this root element to store root colours stored across the entire webpage*/
+    :root {
+      --background: #eaffe9; /* lightish green background for the page*/
+      --surface: #ffffff; /* white background that is for some of the panels */
+      --surface-soft: #dff7e0; /* adding a softer green for some shadows and highlighting */
+      
+      /*UG MAIN COLOURS */
+      --primary: #022717; /* UG main dark green  */
+      --primary-panel: #1a3d2b; /* slightly lighter version of the main dark green used on the RSVP pannel */
+      --gold: #745b04; /* UG gold accent colour used to add some spice and highlights */
+      --border: #c1c8c1; /* White ish gray that is used for highlighting the borders */
+      --text: #0d1f11; /* UG main text colour, considered using plain black but the dark green looks a bit more on theme */
+      --text-soft: #414843; /* Lighter green and is used as my secondary text colour */
+    }
+
+    /* Making the padidng and borders easier to control*/
+    /* Appplying this to all elements in the page, if we don't we get an issue where some element start 
+    overflowing and looking bad and ugly*/
+    /* Found this trick on stack-overflow after stressing a bit */
+    * { 
+      box-sizing: border-box;
+    }
+
+    /* styling for my body part of my page */
+    body { 
+      margin: 0; /* Setting the base margin as 0 */
+      min-height: 100vh; /*the bodyy needs to take up the full page */
+      background: var(--background); /* making use of the bg colour I dfined gloablly */
+      color: var(--text); /* making use of global text colour definition */
+      font-family: Arial, sans-serif; /* using arial for font, we decided this on a google meet call */
+    } 
+
+    /*setting up styling for the header bar */    
+    header { 
+      background: var(--primary); /* setting the dark green from global vars */
+      border-bottom: 4px solid var(--gold); /* adding a nice suttle gold line so the header looks nice */
+      color: white; /* all text in header will be white*/
+    } 
+
+
+    /*setting up my navigation bar*/
+    nav {
+      max-width: 1100px; /*keep this narrow ish */
+      margin: 0 auto; /* try to center stuff */
+      padding: 16px; /* some paddeding */
+      display: flex; /* keep the wrods together*/
+      gap: 16px; /* keep some space between word */
+      flex-wrap: wrap; /* we need this so the text can wrap on the samll screens like phones */
+      align-items: center; /* just set it to center vertically */
+    } 
+
+    /*gloabl styling for the entire main section*/
+    main { 
+      max-width: 1100px; 
+      margin: 0 auto; 
+      padding: 16px; 
+    } 
+
+    /* makeing the main name bigger and bold*/
+    nav b { 
+      font-size: 24px; 
+      font-weight: bold; 
+      margin-right: auto;
+    } 
+
+    /* styling each link in the nave bar
+    nothing fancy*/
+    nav a { 
+      color: white; 
+      text-decoration: none; 
+      font-weight: bold; 
+    } 
+
+    /*my error handler
+    essentiall hiding my loading words or error message until the js throws the error
+    */
+    #pageStatus { 
+      display: none; 
+      background: white; 
+      padding: 12px; 
+    } 
+
+    /*Message to show status of page*/
+    .show-status { display: block; } 
+
+    /*Setting up the path aboce the event hero image*/
+    .breadcrumbs { 
+      color: var(--text-soft); /*using the lighish green from global*/
+      margin-bottom: 16px; 
+    } 
+
+    /*setting up the double column grid */
+    .page-grid { 
+      display: grid; /* Turns the event area into a grid. */
+      grid-template-columns: 2fr 1fr; /*making left slightly bigger than right */
+      gap: 20px; /* add a little space between columns*/
+    } 
+
+    /*styling here image space */
+    .hero-image { 
+      background: 
+      var(--surface-soft); /*adding like a slight highlight around image*/
+      margin-bottom: 20px; 
+    } 
+
+    /*acutally stylking the image itselg*/
+    .hero-image img { 
+      width: 100%; /* set widness */
+      height: 300px; /* set height*/
+      object-fit: cover; /* crop img if too big */
+      display: block; /* kill spacing under img*/
+    } 
+
+    /*small panel behind words so the words standout */
+    .panel { 
+      background: white; 
+      border: 1px solid var(--border); /*slight border */
+      padding: 18px; /* little padding */
+      margin-bottom: 20px; /* adding some padding to white bg */
+    } 
+
+    /*Making sure h1 tags use the UG deep green defined in global*/
+    h1 { color: var(--primary); } 
+
+
+    /*styling my RSVP button*/
+    .button {
+      width: 100%; 
+      padding: 12px; 
+      background: var(--gold); /* using my global gold var */
+      border: none; /*no border on button */
+      font-weight: bold; /* make text bold */
+      cursor: pointer; 
+    } 
+
+    /*setting up some space after each event msc detail like time venue etc*/
+    .detail-row { margin-bottom: 12px; } 
+
+
+    /*styling labels for event msc details like time venue etc */
+    .detail-label { color: var(--primary); font-weight: bold; display: block; }
+
+    /*generic footer styling*/
+    footer { 
+      background: #d1e9d2; 
+      border-top: 1px solid var(--border); 
+      padding: 16px;
+      text-align: center;
+    } 
+
+    /*making the page dynamic for mobile*/
+    @media (max-width: 800px) { 
+
+      /* putting nav links under the title on phone */
+      nav b {
+        width: 100%;
+        margin-right: 0;
+      }
+
+      /* make vertical when using on phone essentially drop from 2 to 1 column*/
+      .page-grid {
+        grid-template-columns: 1fr; 
+      }
+    } 
+    
+  </style>
+</head>
+
+<!--actual event content is in here-->
+<body>
+
+  <!-- Declaring the header for the page -->
+  <header> 
+    <nav>
+      <b>University of Guyana Events</b>
+      <a href="{{ '/' | relative_url }}">Home  </a>
+      <a href="{{ '/submit_event.html' | relative_url }}">Submit An Event  </a>
+      <a href="https://cse2201-final-project-contact-page.page.gd/">Contact  </a>
+      <a href="{{ '/admin.html' | relative_url }}">Admin</a>
+    </nav> 
+  </header>
+
+
+  <!--the actual event details-->
+  <main> 
+
+    <!--show a mesage while the page is loading-->
+    <div id="pageStatus"></div>
+
+    <!--setting up like a trail to show the user where they are at in the page-->
+    <nav class="breadcrumbs"> 
+      <a href="{{ '/' | relative_url }}">Events</a> <!-- Link the events list. -->
+      <span>/</span> <!-- slash to show it like a path-->
+
+      <span id="eventCategoryCrumb">Category</span> <!-- pull event category from js show the word category while loadign-->
+      <span>/</span> <!-- slash to show it like a path-->
+
+      <span id="eventBreadcrumbTitle">Loading event...</span> <!--grab event name from js and show loading text while laoding -->
+    </nav>
+
+    <!-- Start of my double column grid-->
+    <div class="page-grid">
+
+      <!--setting up the left side with the main event content-->
+      <section> 
+
+        <!--styling an image of the event pulled from API-->
+        <div class="hero-image"> <!--Using my css hero-image class-->
+
+          <!-- Shows the event image or fallback image. -->
+          <img alt="Campus event image" id="eventImage" src="https://scontent.fogl4-1.fna.fbcdn.net/v/t39.30808-6/486287027_1056023329895014_6381709912487757575_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=127cfc&_nc_ohc=Pd0COzvGtzQQ7kNvwHQepwU&_nc_oc=AdpOjstIpF4SvUhb6pUwEPRA_dVdm69tsUO9w-ZerQkH76ohb2ujzVrl7ZGwsltJ-bI&_nc_zt=23&_nc_ht=scontent.fogl4-1.fna&_nc_gid=UnWd76gKNDQDlIw-gipUrg&_nc_ss=7b2a8&oh=00_Af_-N1IyuUGG9zVs6iJUmN2GTUMSiRNR4M-cR2roSyYJ7A&oe=6A27E0F0"> 
+        
+        </div>
+
+        <section>
+          <!-- the event title or fallback loading text -->
+          <h1 id="eventTitle">Loading event...</h1> 
+        </section>
+
+        <!--Setting up a nice pannel to show an event description-->
+        <article class="panel">
+          
+          <h2>Event Descritpion</h2> <!-- Shows the overview heading. -->
+
+          <div id="eventDescription"> 
+
+            <!--Show event description or a fallback text while api is loading-->
+            <p>Event details will appear here shortly.</p> 
+          </div> 
+        </article> 
+      </section> 
+
+      <!--Setting up the right side of the grid where user can rsvp see event details and organizer-->
+      <aside>
+
+        <!--Setting up the RSVP pannel-->
+        <section class="panel"> 
+
+          <h2>Will you be attending?</h2> 
+          <p>Please let us know if you will be attending by clicking the button below.</p>
+
+          <!--RSVP button-->
+          <button class="button" id="rsvpButton" type="button">RSVP for this Event</button> 
+        </section> 
+
+        <!--Misc details of the event like time location date etc-->
+        <section class="panel">
+
+          <h2>Details</h2> 
+
+          <!--Set up date ifo-->
+          <div class="detail-row"> 
+            <span class="detail-label">Date</span> 
+            <span id="eventDate">Loading date...</span>  <!--show some text while API is loading info-->
+          </div>
+
+          <!--Show time info for event-->
+          <div class="detail-row"> 
+            <span class="detail-label">Time</span> 
+            <span id="eventTime">Loading time...</span> <!--show some text while API is loading info-->
+          </div> 
+
+          <!--Show venua/location info for event-->
+          <div class="detail-row"> 
+            <span class="detail-label">Venue</span> 
+            <span id="eventVenue">Loading venue...</span> <!--show some text while API is loading info-->
+          </div> 
+        </section> 
+
+
+        <!--Show info about event orgainzer-->
+        <section class="panel">
+          <h2>Organizer</h2> 
+          <p id="eventOrganizer">Loading organizer name...</p> <!--show some text while API is loading info-->
+          <a href="#" id="organizerEmail"> 
+            <span id="organizerEmailText">Loading email...</span> <!--show some text while API is loading info-->
+          </a> 
+        </section> 
+      </aside> 
+    </div> 
+  </main>
+
+  <!--my footer-->
+  <!--will be replaced by Zak or Jon's footer-->
+  <footer> 
+    CSE2201-Final-Project, Lecturer: Lenandlar Singh, University of Guyana
+  </footer>
+
+
+  <!-- Each page has a script tag at the bottom to contain its javascript
+
+      We opted to do this as a group so each webpage is self contained as each page was built by a particular group member.
+
+      When we were using a global js file, when one person commited they broke the file for everyone else and this lead to many disagreements.
+      This is due to the fact that everyone has their own unique coding styling and we did not define linting rules as a group
+
+      The agreed soltuion was that each webpage has its own css and javascript that is wholely owned by the member that wrote that page.
+
+      We know that this is not industy standard however, it is a functional solution that worked for our group
+  -->
+
+  <script>
+
+    // Declaring Global vars
+    const apiUrl = "https://api-r4wp6qrska-uc.a.run.app:443/api/v1"; //base api url
+    const pageStatus = document.getElementById("pageStatus"); //grab the page status so we can update it if we get an error.
+
+    //set the rsvp-page url
+    const rsvpPage = "https://google.com"
+    
+    // grab the event id so we can query the db for the event details
+    const eventId = new URLSearchParams(window.location.search).get("id"); 
+
+
+    // Simple helping func to update txt on screen
+    function putText(id, text) { 
+
+      //grab html element by the id
+      document.getElementById(id).textContent = text;
+    } 
+
+
+    //declaring an asyn func to grab info from db using api
+    //fucntion has to be async as the api has to take some time actually grab the data
+    //essentially this is a new gen implementation of a promise
+    async function loadEvent() { 
+
+      // validation 
+      //check if id is present in path if not throw error and break async function
+      if (!eventId) { 
+        pageStatus.textContent = "No event id was passed."; //err msg
+        pageStatus.classList.add("show-status"); //update pg status
+        return; //break out of async
+      } 
+
+
+      // try catch for the api callout
+      try { 
+        //set page status as loading while we run api
+        pageStatus.textContent = "Loading event details..."; // show a loading message before and while we are grabbing data
+        pageStatus.classList.add("show-status"); // obviously we need to make the messgae visble as well
+
+        //setting up var to store response from API
+        const response = await fetch(apiUrl + "/events/" + eventId);
+
+        //var to store api json into the javascript data
+        const result = await response.json(); 
+
+        // create an event obj to store data about the event
+        //will just store an empty obj if we get an empty or null json response from API
+        const event = result.data || {}; 
+
+        // Update the field for the event object so that webpage can access them
+        putText("eventTitle", event.title || "Campus Event"); // Set event title
+        putText("eventCategoryCrumb", event.category || "General"); // set category for path breadcumbs
+        putText("eventBreadcrumbTitle", event.title || "Campus Event"); // set tle for bcrumbs path
+        putText("eventDescription", event.description || "No description posted yet."); // set evnt description
+        putText("eventDate", event.date || "Date to be announced"); // set date for evnt
+        putText("eventTime", event.time || "Time to be announced"); // set ent time
+        putText("eventVenue", event.venue || "Venue to be announced"); // set ent venu
+        putText("eventOrganizer", event.organizer || "University of Guyana"); // set event organizer
+        putText("organizerEmailText", event.contactEmail || "No email provided"); // set event oerganizer email
+
+        document.title = (event.title || "Event Details") + " - University of Guyana"; // setting the tile for the tab using the event details
+
+        //hceck if we have a url for the event and that is a real link if it is lets use it on the page
+        if (event.imageUrl && event.imageUrl.startsWith("http")) {
+          document.getElementById("eventImage").src = event.imageUrl; // use api img
+        } 
+
+        //check if event has og email and use it
+        if (event.contactEmail) { 
+          document.getElementById("organizerEmail").href = "mailto:" + event.contactEmail;
+        }
+
+
+        // hide the loading text as we got to grab the data from the database
+        pageStatus.classList.remove("show-status");
+      } 
+      
+      // catch all and any errors and then propogate an error messgae to console and show a message on webpage
+      catch (error) { 
+        console.error("Error loading event:", error); //dump error to console for troubleshooting or debugging
+        pageStatus.textContent = "This event could not be loaded."; //show mesage on pg
+      } 
+    }
+
+    // adding functionality to the rsvp button
+    //on click navigate to the rsvp page
+    document.getElementById("rsvpButton").onclick = function() {
+
+      //drop the alert it looks too ugly
+      //alert("The RSVP will be diaplayed shortly");// Show a small alert until the rsvp page load so the user knows something is happending
+      window.location.href = rsvpPage + "?id=" + eventId;
+
+      // was here for debugging
+      console.log(rsvpPage + "?id=" + eventId);
+    };
+
+    //just run the laod evnt after page load
+    //to ensure that data is populated
+    loadEvent();
+  </script>
+</body>
+</html> 

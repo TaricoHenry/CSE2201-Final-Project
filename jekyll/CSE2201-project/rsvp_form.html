@@ -1,0 +1,413 @@
+---
+# Tarico Henry Page for RSVP form
+# URL: /rsvp_form.html
+---
+<!--setting doctype-->
+<!DOCTYPE html>
+
+<!--set lang as english-->
+<html lang="en">
+
+<!--header for my page-->
+<head>
+
+  <!--explicit uft-8 encoding-->
+  <meta charset="utf-8">
+
+  <!--Setting up the viewport so that the page can scale good on phones and well as desktop-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+
+   <!-- Setting a Title for this page, helps make everything look professional and legit-->
+  <title>RSVP Form - University of Guyana Events</title>
+
+  <!--My styles file for this page-->
+  <!--Each page was built by one group member-->
+  <!--We opted for each page to have its own style file due to unique nature of everyone's coding style
+      When we tried one global styles file we ended up in a position where some group members commits
+      to git broke the entire file for everyone else.
+
+      This happened multiple times and as such we opted for each page to be self contained and have its own
+      styles and javascript in the same webpage file
+
+      While we understand this is not the best for structuring we had to arrive at this compromise 
+      so that the group could work and build collaboratively without breaking the project for eveyone 
+      after every git commit
+      -->
+  
+  <style>
+
+    /* Using this root element to store root colours stored across the entire webpage*/
+    :root {
+      --background: #eaffe9; /* lightish green background for the page*/
+      --surface: #ffffff; /* white background that is for some of the panels */
+      /*UG MAIN COLOURS */
+      --primary: #022717; /* UG main dark green  */
+      --gold: #745b04; /* UG gold accent colour used to add some spice and highlights */
+      --border: #c1c8c1; /* White ish gray that is used for highlighting the borders */
+      --text: #0d1f11; /* UG main text colour, considered using plain black but the dark green looks a bit more on theme */
+      --text-soft: #414843; /* Lighter green and is used as my secondary text colour */
+
+      /*adding in a var for the error msg colour*/
+      --error: #ba1a1a; /* red error colour for when form submit breaks */
+    }
+
+    /* Making the padidng and borders easier to control*/
+    /* Appplying this to all elements in the page, if we don't we get an issue where some element start 
+    overflowing and looking bad and ugly*/
+    /* Found this trick on stack-overflow after stressing a bit */
+    * { 
+      box-sizing: border-box;
+    }
+
+    /* styling for my body part of my page */
+    body { 
+      margin: 0; /* Setting the base margin as 0 */
+      min-height: 100vh; /*the bodyy needs to take up the full page */
+      background: var(--background); /* making use of the bg colour I dfined gloablly */
+      color: var(--text); /* making use of global text colour definition */
+      font-family: Arial, sans-serif; /* using arial for font, we decided this on a google meet call */
+    } 
+
+    /*setting up styling for the header bar */    
+    header { 
+      background: var(--primary); /* setting the dark green from global vars */
+      border-bottom: 4px solid var(--gold); /* adding a nice suttle gold line so the header looks nice */
+      color: white; /* all text in header will be white*/
+    } 
+
+
+    /*setting up my navigation bar*/
+    nav {
+      max-width: 1100px; /*keep this narrow ish */
+      margin: 0 auto; /* try to center stuff */
+      padding: 16px; /* some paddeding */
+      display: flex; /* keep the wrods together*/
+      gap: 16px; /* keep some space between word */
+      flex-wrap: wrap; /* we need this so the text can wrap on the samll screens like phones */
+      align-items: center; /* just set it to center vertically */
+    } 
+
+    /*gloabl styling for the entire main section*/
+    main { 
+      max-width: 760px; 
+      margin: 0 auto; 
+      padding: 32px 16px; 
+    } 
+
+    /* makeing the main name bigger and bold*/
+    nav b { 
+      font-size: 24px; 
+      font-weight: bold; 
+      margin-right: auto;
+    } 
+
+    /* styling each link in the nave bar
+    nothing fancy*/
+    nav a { 
+      color: white; 
+      text-decoration: none; 
+      font-weight: bold; 
+    } 
+
+    /* make the nav links go under the title on phone */
+    @media (max-width: 600px) {
+      nav b {
+        width: 100%;
+        margin-right: 0;
+      }
+    }
+
+    /*styling my event title that will use an H1 tag*/
+    h1 {
+      color: var(--primary);
+      text-align: center;
+    }
+
+    /*This is my white box that will be around the form*/
+    .box {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    /*needed some spacing between the heading on the form*/
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 12px;
+    }
+
+    /*making sure the input is styled good*/
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--border);
+    }
+
+    /*styling for my drop down menu fo rthe faculty list*/
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--border);
+    }
+
+    /* the is the square box for free form long text*/
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--border);
+    }
+
+    /*style the radio buttons so they stay small and don't get big and break the ui*/
+    input[type="radio"] {
+      width: auto;
+    }
+
+    /*styling for my submit button*/
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 16px;
+      background: var(--gold);
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /*stylign for my submit message*/
+    #message {
+      color: var(--error);
+      font-weight: bold;
+    }
+
+    /*need the successfully message to be hidden on start*/
+    #successBox {
+      display: none; /*Hiding it*/
+      text-align: center;
+    }
+
+    /*footer at bottom of page*/
+    footer {
+      background: #d1e9d2;
+      border-top: 1px solid var(--border);
+      padding: 16px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<!--actual rsvp page stuff -->
+<body>
+
+  <!-- Setting my header -->
+  <header>
+    <nav>
+      <b>University of Guyana Events</b>
+      <a href="{{ '/' | relative_url }}">Home  </a>
+      <a href="{{ '/submit_event.html' | relative_url }}">Submit An Event  </a>
+      <a href="https://cse2201-final-project-contact-page.page.gd/">Contact  </a>
+      <a href="{{ '/admin.html' | relative_url }}">Admin</a>
+    </nav>
+  </header>
+
+  <!--the actual RSVP form-->
+  <main>
+    <h1 id="eventTitle">Loading event...</h1> <!--loading words while api fetches the data-->
+
+    <p>Please let us know if you will coming to this event.</p>
+
+    <!--form-->
+    <section class="box" id="formBox">
+      <p id="message"></p>
+
+      <!--my html form-->
+      <form id="rsvpForm">
+
+        <!--accepting the student or attendee name-->
+        <label for="fullName">Full Name</label>
+        <input id="fullName" name="fullName" required type="text">
+
+        <!--Grabbing the USI from student or staff id number-->
+        <label for="USI">USI/Staff ID</label>
+        <input id="USI" name="USI" required type="text">
+
+        <!--Grabbing email from person-->
+        <!-- We choose the email address as all students are required to have an email address
+          and it less personal than a phone number-->
+        <label for="email">Email Address</label>
+        <input id="email" name="email" required type="email">
+
+        <!--Dropdown of faculty list-->
+        <label for="faculty">Faculty</label>
+        <select id="faculty" name="faculty">
+          <option value="">Select your faculty/department</option>
+          <option value="Faculty of Agriculture and Forestry">Faculty of Agriculture and Forestry</option>
+          <option value="Faculty of Earth and Environmental Sciences">Faculty of Earth and Environmental Sciences</option>
+          <option value="Faculty of Education and Humanities">Faculty of Education and Humanities</option>
+          <option value="Faculty of Natural Sciences">Faculty of Natural Sciences</option>
+          <option value="Faculty of Social Sciences">Faculty of Social Sciences</option>
+          <option value="College of Medical Sciences">College of Medical Sciences</option>
+        </select>
+
+        <!--Tracking if the person is coming or not-->
+        <!--Students indicated that they prfer to say maybe instead of no
+         because the may change their mind last minute-->
+        <p><strong>Attendance Status</strong></p>
+        <label><input name="attendanceStatus" required type="radio" value="attending"> Attending</label>
+        <label><input name="attendanceStatus" required type="radio" value="maybe"> Maybe</label>
+        <label><input name="attendanceStatus" required type="radio" value="maybe"> Not Attending</label>
+        
+
+        <!--Anythign you would like to tell us?-->
+        <label for="comment">Anything you would like to tell us? (Optional)</label>
+        <textarea id="comment" name="comment" rows="4"></textarea>
+
+        <!--My submit button-->
+        <button type="submit">Submit RSVP</button>
+      </form>
+    </section>
+
+    <!--SHow a succes box after submission so user isn't left wondering-->
+    <section class="box" id="successBox">
+      <h2>Attendance Confirmed!</h2>
+      <p>Thank you. Your RSVP request was submitted successfully.</p>
+      <a href="{{ '/' | relative_url }}">Return to Events</a>
+    </section>
+
+  </main>
+
+  <!--my footer-->
+  <footer>
+    CSE2201-Final-Project, Lecturer: Lenandlar Singh, University of Guyana
+  </footer>
+
+
+  <!-- Each page has a script tag at the bottom to contain its javascript
+
+      We opted to do this as a group so each webpage is self contained as each page was built by a particular group member.
+
+      When we were using a global js file, when one person commited they broke the file for everyone else and this lead to many disagreements.
+      This is due to the fact that everyone has their own unique coding styling and we did not define linting rules as a group
+
+      The agreed soltuion was that each webpage has its own css and javascript that is wholely owned by the member that wrote that page.
+
+      We know that this is not industy standard however, it is a functional solution that worked for our group
+  -->
+
+  <script>
+    //base api url
+    const apiUrl = "https://api-r4wp6qrska-uc.a.run.app:443/api/v1";
+
+    //grab event id from url
+    const eventId = new URLSearchParams(window.location.search).get("id");
+
+    //grab html elements by the id
+    const form = document.getElementById("rsvpForm");
+    const message = document.getElementById("message");
+    const formBox = document.getElementById("formBox");
+    const successBox = document.getElementById("successBox");
+
+    //declaring an asyn func to grab info from db using api
+    //fucntion has to be async as the api has to take some time actually grab the data
+    //essentially this is a new gen implementation of a promise
+    async function loadEvent() {
+
+      //check if we hae an event if it is not present just break async and show error msg
+      if (!eventId) {
+        message.textContent = "No event id was found.";
+        return;
+      }
+
+
+      // try catch for the api callout
+      try { 
+
+         //setting up var to store response from API
+        const response = await fetch(apiUrl + "/events/" + eventId);
+         
+        //var to store api json into the javascript data
+        const result = await response.json(); 
+        
+        // create an event obj to store data about the event
+        //will just store an empty obj if we get an empty or null json response from API
+        const event = result.data || {};
+
+        // Update the field for the event object so that webpage can access them
+        // have the fallback jsut be the words Event
+        document.getElementById("eventTitle").textContent = event.title || "Event";
+      } 
+      
+      // catch all and any errors and then propogate an error messgae to console and show a message on webpage
+      catch (error) {
+        console.error("Error loading event:", error); //dump error to console for troubleshooting or debugging
+        message.textContent = "Event details could not be loaded."; //show mesage on pg
+      } 
+    }
+
+    //submit RSVP reqeust via api
+    // have to use async as we are calling an API
+
+    form.onsubmit = async function(event) {
+
+      //stop the form from refeshing so we can should our msg and submit via api
+      event.preventDefault();
+      message.textContent = "Submitting RSVP...";
+
+
+      //check if we hae an event if it is not present just break async and show error msg
+      if (!eventId) {
+        message.textContent = "No event id was found.";
+        return;
+      }
+
+      // object to submit via api
+      const rsvpData = {
+        eventId: eventId,
+        fullName: document.getElementById("fullName").value,
+        studentId: document.getElementById("USI").value,
+        email: document.getElementById("email").value,
+        attendanceStatus: form.attendanceStatus.value,
+        programme: document.getElementById("faculty").value,
+        comment: document.getElementById("comment").value
+      };
+
+
+      //try catch for api submision
+      try {
+
+        //submit the reqeust and store response in a rsp obj
+        const response = await fetch(apiUrl + "/rsvps", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(rsvpData)
+        });
+
+        // store into a javascrip var for traversing later
+        const result = await response.json();
+
+        //check if API threw an error mesage on submission 
+        // if we did show message to user and break
+        if (!response.ok) {
+          message.textContent = result.message || "RSVP could not be submitted.";
+          return;
+        }
+        
+        //hide form and activate my success  box around the message
+        formBox.style.display = "none";
+        successBox.style.display = "block";
+      } 
+      
+      // catch all and any errors and then propogate an error messgae to console and show a message on webpage
+      catch (error) {
+        console.error("Error submitting RSVP:", error);
+        message.textContent = "Something went wrong while submitting your RSVP.";
+      }
+    };
+
+    //just run the laod evnt after page load
+    //to ensure that data is populated
+    loadEvent();
+  </script>
+</body>
+</html>
