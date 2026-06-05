@@ -1,0 +1,435 @@
+---
+# Tarico Henry Admin Page
+# URL: /admin.html
+---
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <!--explicit uft-8 encoding-->
+  <meta charset="utf-8">
+
+  <!--Setting up the viewport so that the page can scale good on phones and well as desktop-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Setting a Title for this page, helps make everything look professional and legit-->
+  <title>Administrator Page - University of Guyana Events</title>
+
+  <!--My styles file for this page-->
+  <!--Each page was built by one group member-->
+  <!--We opted for each page to have its own style file due to unique nature of everyone's coding style
+      When we tried one global styles file we ended up in a position where some group members commits
+      to git broke the entire file for everyone else.
+
+      This happened multiple times and as such we opted for each page to be self contained and have its own
+      styles and javascript in the same webpage file
+
+      While we understand this is not the best for structuring we had to arrive at this compromise 
+      so that the group could work and build collaboratively without breaking the project for eveyone 
+      after every git commit
+      -->
+  
+  <style>
+
+    /* making the box sizes easier to understand */
+    /* Making the padidng and borders easier to control*/
+    /* Appplying this to all elements in the page, if we don't we get an issue where some element start 
+    overflowing and looking bad and ugly*/
+    /* Found this trick on stack-overflow after stressing a bit */
+    * {
+      box-sizing: border-box;
+    }
+
+    /* styling for bdy */
+    body {
+      margin: 0;
+      background: #eaffe9;
+      color: #0d1f11;
+      font-family: Arial, sans-serif;
+    }
+
+    /* green for the banner at the toop of page */
+    header {
+      background: #022717;
+      border-bottom: 4px solid #745b04;
+      color: white;
+    }
+
+    /* nav bar styling */
+    nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    /* site name in the nav */
+    nav b {
+      font-size: 24px;
+      margin-right: auto;
+    }
+
+    /* nav links */
+    nav a {
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    /* styling for main part of html page */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 16px;
+    }
+
+    /* setting UG green for h1 tags */
+    h1 {
+      color: #022717;
+    }
+
+    /* setting the h2 tag similar as h1 with a bit or margin*/
+    h2 {
+      color: #022717;
+      margin-top: 28px;
+    }
+
+    /* white box behind all display info*/
+    .box {
+      background: white;
+      border: 1px solid #c1c8c1;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    /* needed this to keep the text close to each other in the box */
+    .box p {
+      margin: 7px 0;
+    }
+
+    /* msg are for errors  */
+    #message {
+      color: #ba1a1a;
+      font-weight: bold;
+      min-height: 20px;
+    }
+
+    /* dropdown box styling */
+    select {
+      padding: 8px;
+      margin: 8px 0 14px;
+      border: 1px solid #c1c8c1;
+    }
+
+    /* styling for my buttons */
+    button {
+      padding: 8px 12px;
+      margin: 8px 8px 0 0;
+      background: #745b04;
+      border: 0;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* footer at the bottom */
+    footer {
+      background: #d1e9d2;
+      border-top: 1px solid #c1c8c1;
+      padding: 16px;
+    }
+  </style>
+</head>
+
+<!--actual admin page stuff -->
+<body>
+
+  <!-- Setting my header -->
+  <header>
+    <nav>
+      <b>University of Guyana Events</b>
+      <a href="{{ '/' | relative_url }}">Home</a>
+      <a href="{{ '/' | relative_url }}">Events</a>
+      <a href="{{ '/submit_event.html' | relative_url }}">Submit Event</a>
+      <a href="{{ '/admin.html' | relative_url }}">Admin</a>
+    </nav>
+  </header>
+
+  <!--the actual admin content-->
+  <main>
+    <h1>Admin Page</h1>
+    <p>Administrators manage all events on this page and event organizers can see who has rsvp'ed for their event.</p>
+    <p id="message"></p>
+
+    <!--Section for all RSVPs submissions-->
+    <section>
+      <h2>RSVP Submissions</h2>
+      <h3>RSVP Count Per Event</h3>
+      <div id="rsvpCountList"></div>
+
+      <label for="eventFilter">Filter RSVPs by Event</label><br>
+      <select id="eventFilter">
+        <option value="all">All Events</option>
+      </select>
+
+      <div id="rsvpList"></div>
+    </section>
+
+    <!--Section to track all submisions for events to be hosted on the site-->
+    <section>
+      <h2>Event Requests</h2>
+      <div id="eventRequestList"></div>
+    </section>
+  </main>
+
+  <!--my footer-->
+  <footer>
+    &copy; 2026 University of Guyana. All rights reserved.
+  </footer>
+
+
+  <!-- Each page has a script tag at the bottom to contain its javascript
+
+      We opted to do this as a group so each webpage is self contained as each page was built by a particular group member.
+
+      When we were using a global js file, when one person commited they broke the file for everyone else and this lead to many disagreements.
+      This is due to the fact that everyone has their own unique coding styling and we did not define linting rules as a group
+
+      The agreed soltuion was that each webpage has its own css and javascript that is wholely owned by the member that wrote that page.
+
+      We know that this is not industy standard however, it is a functional solution that worked for our group
+  -->
+
+  <script>
+    //base api url
+    const apiUrl = "https://api-r4wp6qrska-uc.a.run.app:443/api/v1";
+
+    //grab html elements by the id
+    const message = document.getElementById("message");
+    const rsvpList = document.getElementById("rsvpList");
+    const rsvpCountList = document.getElementById("rsvpCountList");
+    const eventFilter = document.getElementById("eventFilter");
+    const eventRequestList = document.getElementById("eventRequestList");
+
+    // store all my rsvps after I grab from api
+    let allRsvps = [];
+
+    /*THis had to be extracted to a function in js becuse it was so repetitive and looks so bad before
+    found a thread on stack-overflow describing this*/
+    //essnetially a function accept a box and test and put the <p> tag in the box
+    // used to anytime we need to show info from the api
+    function genPTag(box, text) {
+      const line = document.createElement("p");
+      line.textContent = text;
+      box.appendChild(line);
+    }
+
+    //similar like above but needed to do this for the white bg box
+    //otherwise there was too much repeated ccode
+    function genBox() {
+      const box = document.createElement("div");
+      box.className = "box";
+      return box;
+    }
+
+    //grap all rsps for a particualr event
+    function showRsvps() {
+      
+      //grab the event id from the dropdown
+      const selectedEvent = eventFilter.value; 
+      
+      // by default we set the flag as false
+      let foundRsvp = false; 
+
+      //need to clear old list before populating with new data
+      rsvpList.innerHTML = ""; 
+
+
+      // real logic starts here
+      //need to loop through every rscp for the event returned by API
+      for (let mycounter = 0; mycounter < allRsvps.length; mycounter++) {
+        const rsvp = allRsvps[mycounter]; //get the current rsvp from the array
+
+        // limiting display to only 1 of 2 conditions
+        // all or if an id is passed
+        if (selectedEvent === "all" || rsvp.eventId === selectedEvent) { 
+          // create box for RSVP info and set flag as true as we ffound at least one rsvp for the event
+          const box = genBox(); 
+          foundRsvp = true; 
+
+
+          // just populating the info in a p tag in the box
+          // showing value and setting a falling back incase not found in db
+          genPTag(box, "Name: " + (rsvp.fullName || "No name")); 
+          genPTag(box, "Email: " + (rsvp.email || "No email"));
+          genPTag(box, "Student ID: " + (rsvp.studentId || "No student id")); 
+          genPTag(box, "Event ID: " + (rsvp.eventId || "No event id")); 
+          genPTag(box, "Status: " + (rsvp.attendanceStatus || "No status")); 
+
+          // finally after the box is populated then put it onto the page 
+          rsvpList.appendChild(box);
+        }
+      }
+
+      // if flag of found RSVPs is false just throw  message to webpage
+      if (foundRsvp === false) { 
+        rsvpList.textContent = "No RSVP submissions found.";
+      } 
+    }
+
+    // calculate the total RSVPs per event
+    function calcRsvpCount() { 
+
+      //obj to store the values as we calculate them
+      const counts = {}; 
+
+      //gotta clear old values first and then we can add new information
+      rsvpCountList.innerHTML = ""; 
+
+      //set the filter to the option of all so that we can do one api call and grab all events 
+      // and populate the totals the details for all with one API call
+      eventFilter.innerHTML = '<option value="all">All Events</option>'; 
+
+
+      // start building my conts obj
+      for (let myCounter = 0; myCounter < allRsvps.length; myCounter++) { 
+        // grabbing event id or set backup texy
+        const eventId = allRsvps[myCounter].eventId || "No event id";
+
+        //incement the count for this event
+        counts[eventId] = (counts[eventId] || 0) + 1; 
+      } 
+
+
+      // count every event id int the counts obj
+      for (let eventId in counts) {
+        const box = genBox();
+        const option = document.createElement("option");
+
+        box.textContent = "Event ID: " + eventId + " has " + counts[eventId] + " RSVP(s)";
+        option.value = eventId; 
+        option.textContent = eventId; 
+
+        rsvpCountList.appendChild(box);
+        eventFilter.appendChild(option); 
+      } 
+
+      //if no RSVPs show a message to user
+      if (allRsvps.length === 0) { 
+        rsvpCountList.textContent = "No RSVP counts yet."; 
+      } 
+    }
+
+    //CAllout to my express api
+    //once I get the data stores the lis, updates the count, and ten display rsvp cards
+    async function loadRsvps() {
+      try {
+        const response = await fetch(apiUrl + "/admin/rsvps");
+        const result = await response.json();
+
+        allRsvps = result.data || [];
+        calcRsvpCount();
+        showRsvps();
+      } catch (error) {
+        console.error("Error loading RSVPs:", error);
+        message.textContent = "Could not load RSVPs.";
+      }
+    }
+
+
+    //build box and status button to approve or reject an event that was submitted to be posted on page
+    function genBttn(box, requestId, status, words) {
+      const button = document.createElement("button");
+      button.textContent = words;
+
+      button.onclick = function() {
+        updateRequest(requestId, status);
+      };
+
+      box.appendChild(button);
+    }
+
+
+    //function to dispaly all event rq
+    // nedd to generate white box background and add the details of each event from the API
+    function showEventRequests(requests) {
+      eventRequestList.innerHTML = "";
+
+      for (let i = 0; i < requests.length; i++) {
+        const request = requests[i];
+        const box = genBox();
+
+        genPTag(box, "Title: " + (request.eventTitle || "No title"));
+        genPTag(box, "Organizer: " + (request.organizerName || "No organizer"));
+        genPTag(box, "Email: " + (request.organizerEmail || "No email"));
+        genPTag(box, "Category: " + (request.category || "No category"));
+        genPTag(box, "Date: " + (request.proposedDate || "No date"));
+        genPTag(box, "Time: " + (request.proposedTime || "No time"));
+        genPTag(box, "Venue: " + (request.venue || "No venue"));
+        genPTag(box, "Status: " + (request.status || "pending"));
+        genPTag(box, "Description: " + (request.description || "No description"));
+
+        genBttn(box, request.id, "approved", "Approve");
+        genBttn(box, request.id, "rejected", "Reject");
+        genBttn(box, request.id, "pending", "Pending");
+
+        eventRequestList.appendChild(box);
+      }
+
+      if (requests.length === 0) {
+        eventRequestList.textContent = "No event requests yet.";
+      }
+    }
+
+    //function to grab all event requested to be displayed on webpage from the API
+    async function loadEventRequests() {
+      try {
+        const response = await fetch(apiUrl + "/admin/event-requests");
+        const result = await response.json();
+        showEventRequests(result.data || []);
+      } catch (error) {
+        console.error("Error loading event requests:", error);
+        message.textContent = "Could not load event requests.";
+      }
+    }
+
+    // call API toupdate the status of one event as necessary
+    async function updateRequest(requestId, status) {
+      try {
+        message.textContent = "Updating request...";
+
+        const response = await fetch(apiUrl + "/admin/event-requests/" + requestId, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status: status })
+        });
+
+        if (response.ok === false) {
+          message.textContent = "Could not update request.";
+          return;
+        }
+
+        message.textContent = "Request updated.";
+        loadEventRequests();
+      } catch (error) {
+        console.error("Error updating request:", error);
+        message.textContent = "Something went wrong updating the request.";
+      }
+    }
+
+    //This runs whenever the RSVP event filter changes.
+    //It calls showRsvps again so the page only shows the selected event.
+    eventFilter.onchange = function() {
+      showRsvps();
+    };
+
+    //only load after pg loads
+    loadRsvps();
+    loadEventRequests();
+  </script>
+</body>
+</html>
