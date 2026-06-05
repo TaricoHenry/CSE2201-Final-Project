@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta name="description" content="Contact the UG Campus Events admin team.">
 
   <!-- Setting a Title for this page, helps make everything look professional and legit-->
-  <title>Contact Us - University of Guyana</title>
+  <title>Contact Us - UG Event Portal</title>
 
   <!--My styles file for this page-->
   <!--Each page was built by one group member-->
@@ -229,7 +229,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     .button {
       width: 100%;
       padding: 12px;
-      background: var(--gold); /* using my global gold var */
+      background: #1B5E20; /* using my button colour */
+      color: white;
       border: none; /* no border on button */
       font-weight: bold; /* make text bold */
       font-size: 15px;
@@ -290,7 +291,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <!-- Declaring the header for the page -->
   <header>
     <nav>
-      <b>University of Guyana Events</b>
+      <b>UG Event Portal</b>
       <a href="https://taricohenry.github.io/CSE2201-Final-Project/">Home  </a>
       <a href="https://taricohenry.github.io/CSE2201-Final-Project/submit_event.html">Submit An Event  </a>
       <a href="https://cse2201-final-project-contact-page.page.gd/">Contact  </a>
