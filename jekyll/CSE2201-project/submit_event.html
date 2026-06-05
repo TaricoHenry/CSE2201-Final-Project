@@ -1,6 +1,6 @@
 ---
-# Tarico Henry Page for RSVP form
-# URL: /rsvp_form.html
+# Tarico Henry Page for submit event form
+# URL: /submit_event.html
 ---
 <!--setting doctype-->
 <!DOCTYPE html>
@@ -15,10 +15,10 @@
   <meta charset="utf-8">
 
   <!--Setting up the viewport so that the page can scale good on phones and well as desktop-->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
    <!-- Setting a Title for this page, helps make everything look professional and legit-->
-  <title>RSVP Form - University of Guyana Events</title>
+  <title>Submit Event - University of Guyana Events</title>
 
   <!--My styles file for this page-->
   <!--Each page was built by one group member-->
@@ -144,7 +144,7 @@
       border: 1px solid var(--border);
     }
 
-    /*styling for my drop down menu fo rthe faculty list*/
+    /*styling for my drop down menu fo rthe category list*/
     select {
       width: 100%;
       padding: 10px;
@@ -156,11 +156,6 @@
       width: 100%;
       padding: 10px;
       border: 1px solid var(--border);
-    }
-
-    /*style the radio buttons so they stay small and don't get big and break the ui*/
-    input[type="radio"] {
-      width: auto;
     }
 
     /*styling for my submit button*/
@@ -200,7 +195,7 @@
   </style>
 </head>
 
-<!--actual rsvp page stuff -->
+<!--actual submit event page stuff -->
 <body>
 
   <!-- Setting my header -->
@@ -212,73 +207,82 @@
       <div class="nav-links"> <!--linking to the navigation links class -->
         <a href="{{ '/' | relative_url }}">Home</a> <!-- Links back to the Jekyll home page. -->
         <a href="{{ '/' | relative_url }}">Events</a> <!-- Links back to events page. -->
-        <a href="#">Submit Event</a> <!-- Link to submit event page. -->
+        <a href="{{ '/submit_event.html' | relative_url }}">Submit Event</a> <!-- Link to submit event page. -->
         <a href="{{ '/about/' | relative_url }}">About</a> <!-- Link to the about page. -->
       </div>
     </nav>
   </header>
 
-  <!--the actual RSVP form-->
+  <!--the actual submit event form-->
   <main>
-    <h1 id="eventTitle">Loading event...</h1> <!--loading words while api fetches the data-->
+    <h1>Reqeust For Your Event To Be On The Page</h1>
 
-    <p>Please let us know if you will coming to this event.</p>
+    <p>Please complete this form to ask for your campus event to be listed on the website.</p>
 
     <!--form-->
     <section class="box" id="formBox">
       <p id="message"></p>
 
       <!--my html form-->
-      <form id="rsvpForm">
+      <form id="eventRequestForm">
 
-        <!--accepting the student or attendee name-->
-        <label for="fullName">Full Name</label>
-        <input id="fullName" name="fullName" required type="text">
+        <!--collect organizer name-->
+        <label for="organizerName">Organizer Name</label>
+        <input id="organizerName" name="organizerName" required type="text">
 
-        <!--Grabbing the USI from student or staff id number-->
-        <label for="USI">USI/Staff ID</label>
-        <input id="USI" name="USI" required type="text">
+        <!--collect organizer email-->
+        <label for="organizerEmail">Organizer Email</label>
+        <input id="organizerEmail" name="organizerEmail" required type="email">
 
-        <!--Grabbing email from person-->
-        <!-- We choose the email address as all students are required to have an email address
-          and it less personal than a phone number-->
-        <label for="email">Email Address</label>
-        <input id="email" name="email" required type="email">
+        <!--collect event title-->
+        <label for="eventTitle">Event Title</label>
+        <input id="eventTitle" name="eventTitle" required type="text">
 
-        <!--Dropdown of faculty list-->
-        <label for="faculty">Faculty</label>
-        <select id="faculty" name="faculty">
-          <option value="">Select your faculty/department</option>
-          <option value="Faculty of Agriculture and Forestry">Faculty of Agriculture and Forestry</option>
-          <option value="Faculty of Earth and Environmental Sciences">Faculty of Earth and Environmental Sciences</option>
-          <option value="Faculty of Education and Humanities">Faculty of Education and Humanities</option>
-          <option value="Faculty of Natural Sciences">Faculty of Natural Sciences</option>
-          <option value="Faculty of Social Sciences">Faculty of Social Sciences</option>
-          <option value="College of Medical Sciences">College of Medical Sciences</option>
+        <!--Dropdown for event category list-->
+        <label for="category">Category</label>
+        <select id="category" name="category" required>
+          <option value="">Select a category</option>
+          <option value="Academic">Academic</option>
+          <option value="Career">Career</option>
+          <option value="Social">Social</option>
+          <option value="Sports">Sports</option>
+          <option value="Workshop">Workshop</option>
+          <option value="Other">Other</option>
         </select>
 
-        <!--Tracking if the person is coming or not-->
-        <!--Students indicated that they prfer to say maybe instead of no
-         because the may change their mind last minute-->
-        <p><strong>Attendance Status</strong></p>
-        <label><input name="attendanceStatus" required type="radio" value="attending"> Attending</label>
-        <label><input name="attendanceStatus" required type="radio" value="maybe"> Maybe</label>
-        <label><input name="attendanceStatus" required type="radio" value="maybe"> Not Attending</label>
-        
+        <!--grab datet-->
+        <label for="proposedDate">Proposed Date</label>
+        <input id="proposedDate" name="proposedDate" required type="date">
 
-        <!--Anythign you would like to tell us?-->
-        <label for="comment">Anything you would like to tell us? (Optional)</label>
-        <textarea id="comment" name="comment" rows="4"></textarea>
+        <!--grb time-->
+        <label for="proposedTime">Proposed Time</label>
+        <input id="proposedTime" name="proposedTime" required type="time">
+
+        <!--venue-->
+        <label for="venue">Venue</label>
+        <input id="venue" name="venue" required type="text">
+
+        <!--otional on the audience size, db was just build before we decided on form layout-->
+        <label for="expectedAudience">Expected Audience (Optional)</label>
+        <input id="expectedAudience" name="expectedAudience" type="text">
+
+        <!--img link, we will not host images in the db, it takes too much resources-->
+        <label for="posterLink">Poster Link (Optional)</label>
+        <input id="posterLink" name="posterLink" type="url">
+
+        <!--event dsc-->
+        <label for="description">Description</label>
+        <textarea id="description" name="description" required rows="5"></textarea>
 
         <!--My submit button-->
-        <button type="submit">Submit RSVP</button>
+        <button type="submit">Submit Event Request</button>
       </form>
     </section>
 
     <!--SHow a succes box after submission so user isn't left wondering-->
     <section class="box" id="successBox">
-      <h2>Attendance Confirmed!</h2>
-      <p>Thank you. Your RSVP request was submitted successfully.</p>
+      <h2>Event Request Submitted!</h2>
+      <p>Thank you. Your event request was submitted and will be reviewed.</p>
       <a href="{{ '/' | relative_url }}">Return to Events</a>
     </section>
 
@@ -306,115 +310,65 @@
     //base api url
     const apiUrl = "https://api-r4wp6qrska-uc.a.run.app:443/api/v1";
 
-    //grab event id from url
-    const eventId = new URLSearchParams(window.location.search).get("id");
-
     //grab html elements by the id
-    const form = document.getElementById("rsvpForm");
+    const form = document.getElementById("eventRequestForm");
     const message = document.getElementById("message");
     const formBox = document.getElementById("formBox");
     const successBox = document.getElementById("successBox");
 
-    //declaring an asyn func to grab info from db using api
-    //fucntion has to be async as the api has to take some time actually grab the data
-    //essentially this is a new gen implementation of a promise
-    async function loadEvent() {
-
-      //check if we hae an event if it is not present just break async and show error msg
-      if (!eventId) {
-        message.textContent = "No event id was found.";
-        return;
-      }
-
-
-      // try catch for the api callout
-      try { 
-
-         //setting up var to store response from API
-        const response = await fetch(apiUrl + "/events/" + eventId);
-         
-        //var to store api json into the javascript data
-        const result = await response.json(); 
-        
-        // create an event obj to store data about the event
-        //will just store an empty obj if we get an empty or null json response from API
-        const event = result.data || {};
-
-        // Update the field for the event object so that webpage can access them
-        // have the fallback jsut be the words Event
-        document.getElementById("eventTitle").textContent = event.title || "Event";
-      } 
-      
-      // catch all and any errors and then propogate an error messgae to console and show a message on webpage
-      catch (error) {
-        console.error("Error loading event:", error); //dump error to console for troubleshooting or debugging
-        message.textContent = "Event details could not be loaded."; //show mesage on pg
-      } 
-    }
-
-    //submit RSVP reqeust via api
+    //submit event reqeust via api
     // have to use async as we are calling an API
-
     form.onsubmit = async function(event) {
 
-      //stop the form from refeshing so we can should our msg and submit via api
+      //stop the form from refeshing so we can show our msg and submit via api
       event.preventDefault();
-      message.textContent = "Submitting RSVP...";
+      message.textContent = "Submitting event request...";
 
-
-      //check if we hae an event if it is not present just break async and show error msg
-      if (!eventId) {
-        message.textContent = "No event id was found.";
-        return;
-      }
-
-      // object to submit via api
-      const rsvpData = {
-        eventId: eventId,
-        fullName: document.getElementById("fullName").value,
-        studentId: document.getElementById("USI").value,
-        email: document.getElementById("email").value,
-        attendanceStatus: form.attendanceStatus.value,
-        programme: document.getElementById("faculty").value,
-        comment: document.getElementById("comment").value
+      // object to submit the event details via api
+      const eventRequestData = {
+        organizerName: document.getElementById("organizerName").value,
+        organizerEmail: document.getElementById("organizerEmail").value,
+        eventTitle: document.getElementById("eventTitle").value,
+        category: document.getElementById("category").value,
+        proposedDate: document.getElementById("proposedDate").value,
+        proposedTime: document.getElementById("proposedTime").value,
+        venue: document.getElementById("venue").value,
+        description: document.getElementById("description").value,
+        expectedAudience: document.getElementById("expectedAudience").value,
+        posterLink: document.getElementById("posterLink").value
       };
-
 
       //try catch for api submision
       try {
 
         //submit the reqeust and store response in a rsp obj
-        const response = await fetch(apiUrl + "/rsvps", {
+        const response = await fetch(apiUrl + "/event-requests", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(rsvpData)
+          body: JSON.stringify(eventRequestData)
         });
 
         // store into a javascrip var for traversing later
         const result = await response.json();
 
-        //check if API threw an error mesage on submission 
+        //check if API threw an error mesage on submission
         // if we did show message to user and break
         if (!response.ok) {
-          message.textContent = result.message || "RSVP could not be submitted.";
+          message.textContent = result.message || "Event request could not be submitted.";
           return;
         }
-        
-        //hide form and activate my success  box around the message
+
+        //hide form and activate my success box around the message
         formBox.style.display = "none";
         successBox.style.display = "block";
-      } 
-      
+      }
+
       // catch all and any errors and then propogate an error messgae to console and show a message on webpage
       catch (error) {
-        console.error("Error submitting RSVP:", error);
-        message.textContent = "Something went wrong while submitting your RSVP.";
+        console.error("Error submitting event request:", error);
+        message.textContent = "Something went wrong while submitting your event request.";
       }
     };
-
-    //just run the laod evnt after page load
-    //to ensure that data is populated
-    loadEvent();
   </script>
 </body>
 </html>
