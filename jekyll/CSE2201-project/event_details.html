@@ -79,7 +79,7 @@
 
 
     /*setting up my navigation bar*/
-    .nav {
+    nav {
       max-width: 1100px; /*keep this narrow ish */
       margin: 0 auto; /* try to center stuff */
       padding: 16px; /* some paddeding */
@@ -87,7 +87,6 @@
       gap: 16px; /* keep some space between word */
       flex-wrap: wrap; /* we need this so the text can wrap on the samll screens like phones */
       align-items: center; /* just set it to center vertically */
-      justify-content: space-between; /* neet to add a bit more space between links */
     } 
 
     /*gloabl styling for the entire main section*/
@@ -98,21 +97,15 @@
     } 
 
     /* makeing the main name bigger and bold*/
-    .brand { 
+    nav b { 
       font-size: 24px; 
       font-weight: bold; 
-    } 
-
-    /* allowing navigation link to wrap and staying on a row. */
-    .nav-links { 
-      display: flex; 
-      gap: 16px; 
-      flex-wrap: wrap; 
+      margin-right: auto;
     } 
 
     /* styling each link in the nave bar
     nothing fancy*/
-    .nav a { 
+    nav a { 
       color: white; 
       text-decoration: none; 
       font-weight: bold; 
@@ -187,16 +180,22 @@
     /*styling labels for event msc details like time venue etc */
     .detail-label { color: var(--primary); font-weight: bold; display: block; }
 
-    /*generic footer styling
-    will be replaced by eithier Zak or John's footer*/
+    /*generic footer styling*/
     footer { 
       background: #d1e9d2; 
       border-top: 1px solid var(--border); 
+      padding: 16px;
+      text-align: center;
     } 
-    .footer-inner { max-width: 1100px; margin: 0 auto; padding: 16px; }
 
     /*making the page dynamic for mobile*/
     @media (max-width: 800px) { 
+
+      /* putting nav links under the title on phone */
+      nav b {
+        width: 100%;
+        margin-right: 0;
+      }
 
       /* make vertical when using on phone essentially drop from 2 to 1 column*/
       .page-grid {
@@ -212,17 +211,12 @@
 
   <!-- Declaring the header for the page -->
   <header> 
-    <nav class="nav"> <!--linking to the nav css class-->
-      <div class="brand">University of Guyana Events</div> <!-- Addding site name to header -->
-      
-      <!--href buttons in the in nav bar-->
-      <div class="nav-links"> <!--linking to the navigation links class -->
-        <a href="{{ '/' | relative_url }}">Home</a> <!-- Links back to the Jekyll home page. -->
-        <a class="active" href="{{ '/' | relative_url }}">Events</a> <!-- Shows the active Events link. -->
-        <a href="#">Submit Event</a> <!-- Link to submit even page. -->
-        <a href="{{ '/about/' | relative_url }}">About</a> <!-- Link to the about page. -->
-        <a href="{{ '/about/' | relative_url }}">Contact</a> <!-- Link to the contact page. -->
-      </div>
+    <nav>
+      <b>University of Guyana Events</b>
+      <a href="{{ '/' | relative_url }}">Home  </a>
+      <a href="{{ '/submit_event.html' | relative_url }}">Submit An Event  </a>
+      <a href="https://cse2201-final-project-contact-page.page.gd/">Contact  </a>
+      <a href="{{ '/admin.html' | relative_url }}">Admin</a>
     </nav> 
   </header>
 
@@ -329,7 +323,7 @@
   <!--my footer-->
   <!--will be replaced by Zak or Jon's footer-->
   <footer> 
-    <div class="footer-inner">&copy; 2026 University of Guyana. All rights reserved.</div>
+    CSE2201-Final-Project, Lecturer: Lenandlar Singh, University of Guyana
   </footer>
 
 

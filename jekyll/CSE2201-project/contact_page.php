@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       color: white; /* all text in header will be white*/
     }
 
-    .nav {
+    nav {
       max-width: 1100px; /* Keeps the nav from getting too wide. */
       margin: 0 auto; /* Centers the nav on the page. */
       padding: 16px; /* Adds space inside the nav. */
@@ -121,7 +121,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       gap: 16px; /* Adds space between nav items. */
       flex-wrap: wrap; /* Allows the nav to wrap on smaller screens. */
       align-items: center; /* Vertically centers the nav content. */
-      justify-content: space-between; /* Pushes the brand and links apart. */
     }
 
     /* global styling for the entire main section*/
@@ -133,20 +132,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     /* making the main name bigger and bold*/
-    .brand {
+    nav b {
       font-size: 24px;
       font-weight: bold;
-    }
-
-    /* allowing navigation links to wrap and staying on a row */
-    .nav-links {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
+      margin-right: auto;
     }
 
     /* styling each link in the nav bar nothing fancy*/
-    .nav a {
+    nav a {
       color: white;
       text-decoration: none;
       font-weight: bold;
@@ -265,20 +258,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     /*generic footer styling*/
     footer {
-      background: var(--primary);
-      border-top: 4px solid var(--gold);
-      color: white;
-      margin-top: auto; /* push it to the bottom */
-    }
-
-    .footer-inner {
-      max-width: 1100px;
-      margin: 0 auto;
+      background: #d1e9d2;
+      border-top: 1px solid var(--border);
+      color: var(--text);
       padding: 16px;
+      text-align: center;
+      margin-top: auto; /* push it to the bottom */
     }
 
     /*making the page dynamic for mobile*/
     @media (max-width: 800px) {
+
+      /* put the nav links under the title on phone */
+      nav b {
+        width: 100%;
+        margin-right: 0;
+      }
 
       /* make vertical when using on phone, drop from 2 to 1 column*/
       .page-grid {
@@ -294,17 +289,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   <!-- Declaring the header for the page -->
   <header>
-    <nav class="nav"> <!--linking to the nav css class-->
-      <div class="brand">University of Guyana Events</div> <!-- Adding site name to header -->
-
-      <!--href buttons in the nav bar-->
-      <div class="nav-links"> <!--linking to the navigation links class-->
-        <a href="index.html">Home</a> <!-- Links back to the home page. -->
-        <a href="events.html">Events</a> <!-- Link to the events list. -->
-        <a href="submit-event.html">Submit Event</a> <!-- Link to submit event page. -->
-        <a href="about.html">About</a> <!-- Link to the about page. -->
-        <a class="active" href="contact.php">Contact</a> <!-- Shows the active Contact link. -->
-      </div>
+    <nav>
+      <b>University of Guyana Events</b>
+      <a href="{{ '/' | relative_url }}">Home  </a>
+      <a href="{{ '/submit_event.html' | relative_url }}">Submit An Event  </a>
+      <a href="https://cse2201-final-project-contact-page.page.gd/">Contact  </a>
+      <a href="{{ '/admin.html' | relative_url }}">Admin</a>
     </nav>
   </header>
 
@@ -427,7 +417,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   <!--my footer-->
   <footer>
-    <div class="footer-inner">&copy; 2026 University of Guyana. All rights reserved.</div>
+    CSE2201-Final-Project, Lecturer: Lenandlar Singh, University of Guyana
   </footer>
 
 </body>
