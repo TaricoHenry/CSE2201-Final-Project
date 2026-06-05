@@ -1,9 +1,9 @@
----
-# Zakariya Bacchus Contact Page
-# URL: /contact.php
----
-
 <?php
+//---
+# Zakariya Bacchus Contact Page
+# URL: /contact_page.php
+//---
+
 
 // Default values for the form fields so the page does not crash on first load
 $submitted = false;
