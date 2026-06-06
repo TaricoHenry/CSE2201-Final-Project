@@ -20,7 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 
    <!-- Setting a Title for this page, helps make everything look professional and legit-->
-  <title>Event Details - University of Guyana</title>
+  <title>Event Details - UG Event Portal</title>
 
   <!--My styles file for this page-->
   <!--Each page was built by one group member-->
@@ -167,7 +167,8 @@
     .button {
       width: 100%; 
       padding: 12px; 
-      background: var(--gold); /* using my global gold var */
+      background: #1B5E20; /* using my button colour */
+      color: white;
       border: none; /*no border on button */
       font-weight: bold; /* make text bold */
       cursor: pointer; 
@@ -212,7 +213,7 @@
   <!-- Declaring the header for the page -->
   <header> 
     <nav>
-      <b>University of Guyana Events</b>
+      <b>UG Event Portal</b>
       <a href="{{ '/' | relative_url }}">Home  </a>
       <a href="{{ '/submit_event.html' | relative_url }}">Submit An Event  </a>
       <a href="https://cse2201-final-project-contact-page.page.gd/">Contact  </a>
@@ -346,7 +347,7 @@
     const pageStatus = document.getElementById("pageStatus"); //grab the page status so we can update it if we get an error.
 
     //set the rsvp-page url
-    const rsvpPage = "https://google.com"
+    const rsvpPage = "https://taricohenry.github.io/CSE2201-Final-Project/rsvp_form"
     
     // grab the event id so we can query the db for the event details
     const eventId = new URLSearchParams(window.location.search).get("id"); 
@@ -401,7 +402,7 @@
         putText("eventOrganizer", event.organizer || "University of Guyana"); // set event organizer
         putText("organizerEmailText", event.contactEmail || "No email provided"); // set event oerganizer email
 
-        document.title = (event.title || "Event Details") + " - University of Guyana"; // setting the tile for the tab using the event details
+        document.title = (event.title || "Event Details") + " - UG Event Portal"; // setting the tile for the tab using the event details
 
         //hceck if we have a url for the event and that is a real link if it is lets use it on the page
         if (event.imageUrl && event.imageUrl.startsWith("http")) {

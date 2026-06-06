@@ -1,5 +1,5 @@
 ---
-# Tarico Henry Admin Page
+# Tarico Henry Home Page
 # URL: /index.html
 ---
 <!DOCTYPE html>
@@ -14,8 +14,8 @@
   <!--Setting up the viewport so that the page can scale good on phones and well as desktop-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Setting a Title for this page, helps make everything look professional and legit-->
-  <title>Administrator Page - University of Guyana Events</title>
+  <!--Setting a title for the browser tab-->
+  <title>UG Event Portal</title>
 
   <!--My styles file for this page-->
   <!--Each page was built by one group member-->
@@ -88,18 +88,46 @@
       padding: 24px 16px;
     }
 
-    /* setting UG green for h1 tags */
-    h1 {
-      color: #022717;
+    /* yellow hero bg from the home page design */
+    .hero {
+      background: #ffe600;
+      border: 1px solid #d2bb00;
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 18px;
     }
 
-    /* setting the h2 tag similar as h1 with a bit or margin*/
+    /* main home page title */
+    h1 {
+      color: #022717;
+      margin-top: 0;
+    }
+
+    /* section headings */
     h2 {
       color: #022717;
       margin-top: 28px;
     }
 
-    /* white box behind all display info*/
+    /* simple button links */
+    .button {
+      background: #1B5E20;
+      color: white;
+      display: inline-block;
+      font-weight: bold;
+      margin: 8px 6px 0;
+      padding: 10px 14px;
+      text-decoration: none;
+    }
+
+    /* grid for info boxes and event boxes */
+    .grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    /* white boxes on the page */
     .box {
       background: white;
       border: 1px solid #c1c8c1;
@@ -107,33 +135,36 @@
       margin-bottom: 12px;
     }
 
-    /* needed this to keep the text close to each other in the box */
-    .box p {
-      margin: 7px 0;
+    /*styling the white card for each even*/
+    .event-card {
+      background: white;
+      border: 1px solid #c1c8c1;
+      padding: 14px;
     }
 
-    /* msg are for errors  */
+    /* keep text in the card close to each other */
+    .event-card p {
+      margin: 8px 0;
+    }
+
+    /* category label */
+    .tag {
+      color: #745b04;
+      font-weight: bold;
+    }
+
+    /* white box for search bar */
+    input {
+      border: 1px solid #c1c8c1;
+      padding: 10px;
+      width: 100%;
+    }
+
+    /* msg are for errors */
     #message {
       color: #ba1a1a;
       font-weight: bold;
       min-height: 20px;
-    }
-
-    /* dropdown box styling */
-    select {
-      padding: 8px;
-      margin: 8px 0 14px;
-      border: 1px solid #c1c8c1;
-    }
-
-    /* styling for my buttons */
-    button {
-      padding: 8px 12px;
-      margin: 8px 8px 0 0;
-      background: #745b04;
-      border: 0;
-      font-weight: bold;
-      cursor: pointer;
     }
 
     /* footer at the bottom */
@@ -144,7 +175,12 @@
       text-align: center;
     }
 
-    /*making it so the heading buttons go under the title on mobile*/
+    .pic-styling { 
+    width: 320px; /* sets a fixed width for the logo */ 
+    max-width: 100%; /*  */ 
+}
+
+    /* make the nav links go under the title on phone */
     @media (max-width: 600px) {
       nav b {
         width: 100%;
@@ -154,13 +190,13 @@
   </style>
 </head>
 
-<!--actual admin page stuff -->
+<!--actual home page stuff-->
 <body>
 
-  <!-- Setting my header -->
+  <!-- Setting up my header -->
   <header>
     <nav>
-      <b>University of Guyana Events</b>
+      <b>UG Event Portal</b>
       <a href="{{ '/' | relative_url }}">Home  </a>
       <a href="{{ '/submit_event.html' | relative_url }}">Submit An Event  </a>
       <a href="https://cse2201-final-project-contact-page.page.gd/">Contact  </a>
@@ -168,30 +204,46 @@
     </nav>
   </header>
 
-  <!--the actual admin content-->
+  <!--acutl pg content-->
   <main>
-    <h1>Admin Page</h1>
-    <p>Administrators manage all events on this page and event organizers can see who has rsvp'ed for their event.</p>
-    <p id="message"></p>
 
-    <!--Section for all RSVPs submissions-->
-    <section>
-      <h2>RSVP Submissions</h2>
-      <h3>RSVP Count Per Event</h3>
-      <div id="rsvpCountList"></div>
-
-      <label for="eventFilter">Filter RSVPs by Event</label><br>
-      <select id="eventFilter">
-        <option value="all">All Events</option>
-      </select>
-
-      <div id="rsvpList"></div>
+    <!--yellow hero area-->
+    <section class="hero">
+      <img src="assets/images/UoG_Logo.png" alt="University of Guyana Logo" class="pic-styling">
+      <h1>Event Portal</h1>
+      <p>Find campus events, view the details, and RSVP from one simple page.</p>
+      <a class="button" href="#events">View Events</a> <!--jump to events section-->
+      <a class="button" href="{{ '/submit_event.html' | relative_url }}">Submit An Event</a><!--jump to submit event page-->
     </section>
 
-    <!--Section to track all submisions for events to be hosted on the site-->
-    <section>
-      <h2>Event Requests</h2>
-      <div id="eventRequestList"></div>
+    <!--showing a bit of info of the project-->
+    <section class="grid">
+      <div class="box">
+        <h2>Find Events</h2>
+        <p>Students can see approved campus events in one place.</p>
+      </div>
+
+      <div class="box">
+        <h2>RSVP</h2>
+        <p>Each event links to a details page where students can RSVP.</p>
+      </div>
+
+      <div class="box">
+        <h2>Request Events</h2>
+        <p>Organizers can ask for their event to be listed on the site.</p>
+      </div>
+    </section>
+
+    <!--events section-->
+    <section id="events">
+      <h2>Upcoming Events</h2>
+      <p id="message">Loading events...</p> <!-- fallback text while API loads-->
+
+      <!--Search bar-->
+      <input id="searchInput" type="text" placeholder="Search events by title, category, or venue">
+      
+      <!--events list-->
+      <div id="eventList" class="grid"></div>
     </section>
   </main>
 
@@ -217,228 +269,140 @@
     //base api url
     const apiUrl = "https://api-r4wp6qrska-uc.a.run.app:443/api/v1";
 
-    //grab html elements by the id
+    //grab pg elements by id
+    const eventDetailsPage = "{{ '/event_details.html' | relative_url }}";
+    const eventList = document.getElementById("eventList");
     const message = document.getElementById("message");
-    const rsvpList = document.getElementById("rsvpList");
-    const rsvpCountList = document.getElementById("rsvpCountList");
-    const eventFilter = document.getElementById("eventFilter");
-    const eventRequestList = document.getElementById("eventRequestList");
+    const searchInput = document.getElementById("searchInput");
 
-    // store all my rsvps after I grab from api
-    let allRsvps = [];
+    //store all events from the api
+    let allEvents = [];
 
-    /*THis had to be extracted to a function in js becuse it was so repetitive and looks so bad before
-    found a thread on stack-overflow describing this*/
-    //essnetially a function accept a box and test and put the <p> tag in the box
-    // used to anytime we need to show info from the api
-    function genPTag(box, text) {
-      const line = document.createElement("p");
-      line.textContent = text;
-      box.appendChild(line);
+    //show the events on the page
+    function showEvents(eventsToShow) {
+      eventList.innerHTML = "";
+
+      //break early if no events
+      if (eventsToShow.length === 0) {
+        message.textContent = "No events found.";
+        return;
+      }
+
+      //leave empty at start and fill if we see an error
+      message.textContent = "";
+
+      for (let myCounter = 0; myCounter < eventsToShow.length; myCounter++) {
+
+       //grab current event from the eventsToShow in the loop
+        const event = eventsToShow[myCounter];
+
+        // set description and fallbacl text
+        let shortDescription = event.description || "No description posted yet.";
+
+        //sset up all elements for one event card
+        const card = document.createElement("article");
+        const category = document.createElement("p");
+        const title = document.createElement("h3");
+        const description = document.createElement("p");
+        const date = document.createElement("p");
+        const venue = document.createElement("p");
+        const link = document.createElement("a");
+
+
+        //instantiate tmy css classes for card, category and bttn
+        card.className = "event-card";
+        category.className = "tag";
+        link.className = "button";
+
+        // trim desc so it don't escape card and look ugly
+        if (shortDescription.length > 160) {
+          shortDescription = shortDescription.substring(0, 160) + "...";
+        }
+
+        // pass the event data to th html elements
+        category.textContent = event.category || "Campus Event";
+        title.textContent = event.title || "Untitled Event";
+        description.textContent = shortDescription;
+        date.textContent = "Date: " + (event.date || "To be announced") + " at " + (event.time || "TBA");
+        venue.textContent = "Venue: " + (event.venue || "To be announced");
+        
+        //set up to pass id when button is clicked so that event_details page can render the data
+        link.textContent = "View Details";
+        link.href = eventDetailsPage + "?id=" + event.id;
+
+
+        // add the fine fine elements into the card we set up
+        card.appendChild(category);
+        card.appendChild(title);
+        card.appendChild(description);
+        card.appendChild(date);
+        card.appendChild(venue);
+        card.appendChild(link);
+        eventList.appendChild(card);
+      }
     }
 
-    //similar like above but needed to do this for the white bg box
-    //otherwise there was too much repeated ccode
-    function genBox() {
-      const box = document.createElement("div");
-      box.className = "box";
-      return box;
-    }
+    // search functionailty
+    // using a simple text match
+    function searchEvents() { 
 
-    //grap all rsps for a particualr event
-    function showRsvps() {
-      
-      //grab the event id from the dropdown
-      const selectedEvent = eventFilter.value; 
-      
-      // by default we set the flag as false
-      let foundRsvp = false; 
+      //grab user input
+      const searchWords = searchInput.value.toLowerCase();
 
-      //need to clear old list before populating with new data
-      rsvpList.innerHTML = ""; 
+      //empty arr for events that start to amtch
+      const matchingEvents = [];
 
+      //loop all evetns in the allEvents arr
+      for (let i = 0; i < allEvents.length; i++) {
 
-      // real logic starts here
-      //need to loop through every rscp for the event returned by API
-      for (let mycounter = 0; mycounter < allRsvps.length; mycounter++) {
-        const rsvp = allRsvps[mycounter]; //get the current rsvp from the array
+        // set up title category and venu and push to lower
+        const event = allEvents[i];
+        const title = (event.title || "").toLowerCase();
+        const category = (event.category || "").toLowerCase();
+        const venue = (event.venue || "").toLowerCase();
 
-        // limiting display to only 1 of 2 conditions
-        // all or if an id is passed
-        if (selectedEvent === "all" || rsvp.eventId === selectedEvent) { 
-          // create box for RSVP info and set flag as true as we ffound at least one rsvp for the event
-          const box = genBox(); 
-          foundRsvp = true; 
-
-
-          // just populating the info in a p tag in the box
-          // showing value and setting a falling back incase not found in db
-          genPTag(box, "Name: " + (rsvp.fullName || "No name")); 
-          genPTag(box, "Email: " + (rsvp.email || "No email"));
-          genPTag(box, "Student ID: " + (rsvp.studentId || "No student id")); 
-          genPTag(box, "Event ID: " + (rsvp.eventId || "No event id")); 
-          genPTag(box, "Status: " + (rsvp.attendanceStatus || "No status")); 
-
-          // finally after the box is populated then put it onto the page 
-          rsvpList.appendChild(box);
+        //if input search wrds in title or cat or venue, add it to matchingEvents arr
+        if (title.includes(searchWords) || category.includes(searchWords) || venue.includes(searchWords)) {
+          matchingEvents.push(event);
         }
       }
 
-      // if flag of found RSVPs is false just throw  message to webpage
-      if (foundRsvp === false) { 
-        rsvpList.textContent = "No RSVP submissions found.";
-      } 
+      // call the showing events function and then just pass the arr of the matching events
+      showEvents(matchingEvents);
     }
 
-    // calculate the total RSVPs per event
-    function calcRsvpCount() { 
-
-      //obj to store the values as we calculate them
-      const counts = {}; 
-
-      //gotta clear old values first and then we can add new information
-      rsvpCountList.innerHTML = ""; 
-
-      //set the filter to the option of all so that we can do one api call and grab all events 
-      // and populate the totals the details for all with one API call
-      eventFilter.innerHTML = '<option value="all">All Events</option>'; 
-
-
-      // start building my conts obj
-      for (let myCounter = 0; myCounter < allRsvps.length; myCounter++) { 
-        // grabbing event id or set backup texy
-        const eventId = allRsvps[myCounter].eventId || "No event id";
-
-        //incement the count for this event
-        counts[eventId] = (counts[eventId] || 0) + 1; 
-      } 
-
-
-      // count every event id int the counts obj
-      for (let eventId in counts) {
-        const box = genBox();
-        const option = document.createElement("option");
-
-        box.textContent = "Event ID: " + eventId + " has " + counts[eventId] + " RSVP(s)";
-        option.value = eventId; 
-        option.textContent = eventId; 
-
-        rsvpCountList.appendChild(box);
-        eventFilter.appendChild(option); 
-      } 
-
-      //if no RSVPs show a message to user
-      if (allRsvps.length === 0) { 
-        rsvpCountList.textContent = "No RSVP counts yet."; 
-      } 
-    }
-
-    //CAllout to my express api
-    //once I get the data stores the lis, updates the count, and ten display rsvp cards
-    async function loadRsvps() {
+    // only load approved events from the app
+    // need async as this is technically a promise event cause of the api call
+    // no async and this function will break
+    async function loadEvents() {
+      
       try {
-        const response = await fetch(apiUrl + "/admin/rsvps");
+        //store reposne from api
+        const response = await fetch(apiUrl + "/events");
+        
+        //pass json to js obj
         const result = await response.json();
 
-        allRsvps = result.data || [];
-        calcRsvpCount();
-        showRsvps();
-      } catch (error) {
-        console.error("Error loading RSVPs:", error);
-        message.textContent = "Could not load RSVPs.";
+        // store events from api result or just empty arr if null
+        allEvents = result.data || [];
+        
+         // call the showing events function and then just pass the arr of the matching events
+        showEvents(allEvents);
+      } 
+      //catch every and all error and throw message to console and show user message
+      catch (error) {
+        console.error("Error loading events:", error);
+        message.textContent = "Could not load events."; //message for user
       }
     }
 
-
-    //build box and status button to approve or reject an event that was submitted to be posted on page
-    function genBttn(box, requestId, status, words) {
-      const button = document.createElement("button");
-      button.textContent = words;
-
-      button.onclick = function() {
-        updateRequest(requestId, status);
-      };
-
-      box.appendChild(button);
-    }
-
-
-    //function to dispaly all event rq
-    // nedd to generate white box background and add the details of each event from the API
-    function showEventRequests(requests) {
-      eventRequestList.innerHTML = "";
-
-      for (let i = 0; i < requests.length; i++) {
-        const request = requests[i];
-        const box = genBox();
-
-        genPTag(box, "Title: " + (request.eventTitle || "No title"));
-        genPTag(box, "Organizer: " + (request.organizerName || "No organizer"));
-        genPTag(box, "Email: " + (request.organizerEmail || "No email"));
-        genPTag(box, "Category: " + (request.category || "No category"));
-        genPTag(box, "Date: " + (request.proposedDate || "No date"));
-        genPTag(box, "Time: " + (request.proposedTime || "No time"));
-        genPTag(box, "Venue: " + (request.venue || "No venue"));
-        genPTag(box, "Status: " + (request.status || "pending"));
-        genPTag(box, "Description: " + (request.description || "No description"));
-
-        genBttn(box, request.id, "approved", "Approve");
-        genBttn(box, request.id, "rejected", "Reject");
-        genBttn(box, request.id, "pending", "Pending");
-
-        eventRequestList.appendChild(box);
-      }
-
-      if (requests.length === 0) {
-        eventRequestList.textContent = "No event requests yet.";
-      }
-    }
-
-    //function to grab all event requested to be displayed on webpage from the API
-    async function loadEventRequests() {
-      try {
-        const response = await fetch(apiUrl + "/admin/event-requests");
-        const result = await response.json();
-        showEventRequests(result.data || []);
-      } catch (error) {
-        console.error("Error loading event requests:", error);
-        message.textContent = "Could not load event requests.";
-      }
-    }
-
-    // call API toupdate the status of one event as necessary
-    async function updateRequest(requestId, status) {
-      try {
-        message.textContent = "Updating request...";
-
-        const response = await fetch(apiUrl + "/admin/event-requests/" + requestId, {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ status: status })
-        });
-
-        if (response.ok === false) {
-          message.textContent = "Could not update request.";
-          return;
-        }
-
-        message.textContent = "Request updated.";
-        loadEventRequests();
-      } catch (error) {
-        console.error("Error updating request:", error);
-        message.textContent = "Something went wrong updating the request.";
-      }
-    }
-
-    //This runs whenever the RSVP event filter changes.
-    //It calls showRsvps again so the page only shows the selected event.
-    eventFilter.onchange = function() {
-      showRsvps();
+    //run search when typing
+    searchInput.oninput = function() {
+      searchEvents();
     };
 
     //only load after pg loads
-    loadRsvps();
-    loadEventRequests();
+    loadEvents();
   </script>
 </body>
 </html>
