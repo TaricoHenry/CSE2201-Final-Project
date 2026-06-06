@@ -175,6 +175,11 @@
       text-align: center;
     }
 
+    .pic-styling { 
+    width: 320px; /* sets a fixed width for the logo */ 
+    max-width: 100%; /*  */ 
+}
+
     /* make the nav links go under the title on phone */
     @media (max-width: 600px) {
       nav b {
@@ -204,7 +209,8 @@
 
     <!--yellow hero area-->
     <section class="hero">
-      <h1>UG Event Portal</h1>
+      <img src="assets/images/UoG_Logo.png" alt="University of Guyana Logo" class="pic-styling">
+      <h1>Event Portal</h1>
       <p>Find campus events, view the details, and RSVP from one simple page.</p>
       <a class="button" href="#events">View Events</a> <!--jump to events section-->
       <a class="button" href="{{ '/submit_event.html' | relative_url }}">Submit An Event</a><!--jump to submit event page-->
