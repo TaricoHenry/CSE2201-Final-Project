@@ -374,7 +374,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <!--heading and a little note telling the user what this form is for-->
           <h2>Send a Message</h2>
           <p style="color: var(--text-soft); font-size: 14px; margin-bottom: 14px;">
-            For general enquiries only. To list an event use the <a href="submit-event.html">Submit Event</a> page.
+            For general enquiries only. To list an event use the <a href="https://taricohenry.github.io/CSE2201-Final-Project/submit_event.html">Submit Event</a> page.
           </p>
 
           <!--if php caught a validation error up top we show a red error box here so the user knows what to fix-->
